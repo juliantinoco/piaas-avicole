@@ -15,15 +15,25 @@ export interface Chicken {
   feedingHistory: FeedingRecord[];
 }
 
+
+export interface EnvironmentRecord {
+  timestamp: string;
+  temperature: number;
+  humidity: number;
+  luminosity: number;
+  isReal: boolean;
+}
+
 export interface Farm {
   id: number;
-
   name: string;
-
   width: number;
   height: number;
-
-  chickens: Chicken[];
-
   averageTemperature: number;
+  currentTemperature: number;
+  currentHumidity: number;
+  currentLuminosity: number;
+  currentIsReal: boolean;
+  environment: EnvironmentRecord[];
+  chickens: Chicken[];
 }

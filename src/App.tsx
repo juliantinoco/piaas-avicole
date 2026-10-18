@@ -3,6 +3,8 @@ import { useState } from "react";
 import BarnView from "./components/BarnView";
 import ChickenDetails from "./components/ChickenDetails";
 import FarmCard from "./components/FarmCard";
+import SimulationControls from "./components/SimulationControls";
+import EnvironmentPanel from "./components/EnvironmentPanel";
 
 import { Chicken } from "./data/types";
 
@@ -62,6 +64,21 @@ export default function App() {
         ))}
       </div>
 
+      {/* SIMULATION CONTROLS */}
+
+      <div
+        style={{
+          backgroundColor: "white",
+          borderRadius: "12px",
+          padding: "20px",
+          marginBottom: "20px",
+          boxShadow:
+            "0 2px 8px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <SimulationControls />
+      </div>
+
       {/* MAIN CONTENT */}
 
       <div
@@ -79,14 +96,13 @@ export default function App() {
             borderRadius: "12px",
             padding: "15px",
             boxShadow:
-              "0 2px 8px rgba(0,0,0,0.1)",
+              "0 2px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
           <h2>{selectedFarm.name}</h2>
 
           <p>
-            Dimensions: {selectedFarm.width}
-            {" x "}
+            Dimensions: {selectedFarm.width} x{" "}
             {selectedFarm.height}
           </p>
 
@@ -97,7 +113,9 @@ export default function App() {
 
           <BarnView
             barn={selectedFarm}
-            onSelectChicken={setSelectedChicken}
+            onSelectChicken={
+              setSelectedChicken
+            }
           />
         </div>
 
@@ -105,16 +123,38 @@ export default function App() {
 
         <div
           style={{
-            backgroundColor: "white",
-            borderRadius: "12px",
-            padding: "15px",
-            boxShadow:
-              "0 2px 8px rgba(0,0,0,0.1)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
           }}
         >
-          <ChickenDetails
-            chicken={selectedChicken}
-          />
+          <div
+            style={{
+              backgroundColor: "white",
+              borderRadius: "12px",
+              padding: "15px",
+              boxShadow:
+                "0 2px 8px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <EnvironmentPanel
+              farm={selectedFarm}
+            />
+          </div>
+
+          <div
+            style={{
+              backgroundColor: "white",
+              borderRadius: "12px",
+              padding: "15px",
+              boxShadow:
+                "0 2px 8px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <ChickenDetails
+              chicken={selectedChicken}
+            />
+          </div>
         </div>
       </div>
     </div>
