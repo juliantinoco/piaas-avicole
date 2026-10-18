@@ -1,50 +1,143 @@
-export default function
-SimulationControls() {
+interface Props {
+  onPlay: () => void;
+  onPause: () => void;
 
+  selectedDate: string;
+  selectedTime: string;
+  selectedSpeed: number;
+
+  onDateChange: (value: string) => void;
+  onTimeChange: (value: string) => void;
+  onSpeedChange: (value: number) => void;
+}
+
+export default function SimulationControls({
+  onPlay,
+  onPause,
+
+  selectedDate,
+  selectedTime,
+  selectedSpeed,
+
+  onDateChange,
+  onTimeChange,
+  onSpeedChange,
+}: Props) {
   return (
-
     <div>
-
-      <h2>
+      <h3
+        style={{
+          marginBottom: "15px",
+        }}
+      >
         Simulation Controls
-      </h2>
+      </h3>
 
-      <input
-        type="date"
-      />
+      <div
+        style={{
+          display: "flex",
+          gap: "20px",
+          marginBottom: "15px",
+          flexWrap: "wrap",
+        }}
+      >
+        <div>
+          <label>
+            Date
+          </label>
 
-      <button>
-        ▶ Play
-      </button>
+          <br />
 
-      <button>
-        ⏸ Pause
-      </button>
+          <input
+            type="date"
+            min="2026-09-01"
+            max="2026-09-30"
+            value={selectedDate}
+            onChange={(e) =>
+              onDateChange(
+                e.target.value
+              )
+            }
+          />
+        </div>
 
-      <select>
+        <div>
+          <label>
+            Start Time
+          </label>
 
-        <option>
-          0.5x
-        </option>
+          <br />
 
-        <option>
-          1x
-        </option>
+          <input
+            type="time"
+            value={selectedTime}
+            onChange={(e) =>
+              onTimeChange(
+                e.target.value
+              )
+            }
+          />
+        </div>
+      </div>
 
-        <option>
-          2x
-        </option>
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          marginBottom: "15px",
+        }}
+      >
+        <button
+          onClick={onPlay}
+        >
+          ▶ Play
+        </button>
 
-        <option>
-          4x
-        </option>
+        <button
+          onClick={onPause}
+        >
+          ⏸ Pause
+        </button>
+      </div>
 
-        <option>
-          8x
-        </option>
+      <div>
+        <label>
+          Simulation Speed
+        </label>
 
-      </select>
+        <br />
 
+        <select
+          value={selectedSpeed}
+          onChange={(e) =>
+            onSpeedChange(
+              Number(
+                e.target.value
+              )
+            )
+          }
+        >
+          <option value={1}>
+            1x (5 min/sec)
+          </option>
+
+          <option value={12}>
+            12x (1 hour/sec)
+          </option>
+
+          <option value={24}>
+            24x (2 hours/sec)
+          </option>
+
+          <option value={60}>
+            60x (5 hours/sec)
+          </option>
+
+          <option value={120}>
+            120x (10 hours/sec)
+          </option>
+        </select>
+      </div>
     </div>
   );
 }

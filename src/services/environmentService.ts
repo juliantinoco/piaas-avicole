@@ -1,6 +1,6 @@
-import { EnvironmentRecord } from "./types";
+import { EnvironmentRecord } from "../data/types";
 
-export function generateEnvironment(): EnvironmentRecord[] {
+export function getEnvironmentData(): EnvironmentRecord[] {
   const data: EnvironmentRecord[] = [];
 
   const start = new Date("2026-09-01T00:00:00");
@@ -58,7 +58,7 @@ export function generateEnvironment(): EnvironmentRecord[] {
 
     current = new Date(
       current.getTime() +
-        5 * 60 * 1000
+      5 * 60 * 1000
     );
   }
 

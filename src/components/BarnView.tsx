@@ -1,21 +1,41 @@
 import Chicken from "./Chicken";
-import { Barn, Chicken as ChickenType } from "../data/mockData";
+
+import {
+  Farm,
+  Chicken as ChickenType,
+} from "../data/types";
 
 interface Props {
-  barn: Barn;
-  onSelectChicken: (c: ChickenType) => void;
+  barn: Farm;
+
+  luminosity: number;
+
+  onSelectChicken: (
+    c: ChickenType
+  ) => void;
 }
 
 export default function BarnView({
   barn,
+  luminosity,
   onSelectChicken,
 }: Props) {
+  let backgroundColor = "#FFF8DC";
+
+  if (luminosity < 20) {
+    backgroundColor = "#101820";
+  } else if (luminosity < 60) {
+    backgroundColor = "#909090";
+  }
+
   return (
     <div
       style={{
         border: "2px solid black",
         width: "100%",
-        background: "#f9f9f9",
+        background: backgroundColor,
+        transition:
+          "background-color 0.8s ease",
       }}
     >
       <svg
@@ -28,13 +48,14 @@ export default function BarnView({
           y="0"
           width={barn.width}
           height={barn.height}
-          fill="#f4f4f4"
+          fill={backgroundColor}
         />
 
         {barn.chickens.map((c) => (
           <Chicken
             key={c.id}
             chicken={c}
+            luminosity={luminosity}
             onClick={onSelectChicken}
           />
         ))}

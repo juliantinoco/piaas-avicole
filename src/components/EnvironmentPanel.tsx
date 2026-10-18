@@ -1,42 +1,68 @@
-import { Farm } from "../data/types";
-
 interface Props {
-  farm: Farm;
+  timestamp: string;
+  temperature: number;
+  humidity: number;
+  luminosity: number;
+  isReal: boolean;
 }
 
 export default function EnvironmentPanel({
-  farm,
+  timestamp,
+  temperature,
+  humidity,
+  luminosity,
+  isReal,
 }: Props) {
+  const date =
+    new Date(timestamp);
+
   return (
-    <div>
+    <div
+      style={{
+        minWidth: "250px",
+      }}
+    >
       <h3>Environment</h3>
 
       <p>
-        Temperature: {farm.currentTemperature}°C
+        <strong>Date:</strong>{" "}
+        {date.toLocaleDateString()}
       </p>
 
       <p>
-        Humidity: {farm.currentHumidity}%
+        <strong>Time:</strong>{" "}
+        {date.toLocaleTimeString()}
       </p>
 
       <p>
-        Luminosity: {farm.currentLuminosity}
+        <strong>Temperature:</strong>{" "}
+        {temperature.toFixed(2)}°C
+      </p>
+
+      <p>
+        <strong>Humidity:</strong>{" "}
+        {humidity.toFixed(2)}%
+      </p>
+
+      <p>
+        <strong>Luminosity:</strong>{" "}
+        {luminosity}
       </p>
 
       <div
         style={{
-          backgroundColor: farm.currentIsReal
-            ? "#00B894"
-            : "#6C5CE7",
-          color: "white",
+          marginTop: "10px",
           padding: "10px",
           borderRadius: "8px",
-          marginTop: "10px",
           textAlign: "center",
+          color: "white",
           fontWeight: "bold",
+          backgroundColor: isReal
+            ? "#00B894"
+            : "#6C5CE7",
         }}
       >
-        {farm.currentIsReal
+        {isReal
           ? "REAL SENSOR"
           : "VIRTUAL PREDICTION"}
       </div>

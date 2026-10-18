@@ -1,26 +1,26 @@
 import { Farm } from "./types";
-
-import {
-  generateChickens
-} from "./generateChickens";
-
-import {
-  generateEnvironment
-} from "./generateEnvironment";
+import { generateChickens } from "./generateChickens";
 
 export const farm2: Farm = {
+  id: 2,
 
-  id: 1,
-  name: "CRA 0131-1",
-  width: 830,
-  height: 360,
-  averageTemperature: 22,
-  currentTemperature: 22,
-  currentHumidity: 47,
-  currentLuminosity: 50,
+  name: "CRA 0158-2",
+
+  width: 950,
+  height: 420,
+
+  averageTemperature: 21,
+
+  currentTemperature: 21,
+
+  currentHumidity: 48,
+
+  currentLuminosity: 55,
+
   currentIsReal: true,
-  environment:
-    generateEnvironment(),
+
+  environment: [],
+
   chickens:
-    generateChickens(200),
+    generateChickens(450),
 };
