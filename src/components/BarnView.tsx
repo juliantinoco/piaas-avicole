@@ -8,6 +8,8 @@ import {
 interface Props {
   barn: Farm;
 
+  chickens: ChickenType[];
+
   luminosity: number;
 
   onSelectChicken: (
@@ -17,6 +19,7 @@ interface Props {
 
 export default function BarnView({
   barn,
+  chickens,
   luminosity,
   onSelectChicken,
 }: Props) {
@@ -51,7 +54,7 @@ export default function BarnView({
           fill={backgroundColor}
         />
 
-        {barn.chickens.map((c) => (
+        {(chickens ?? []).map((c) => (
           <Chicken
             key={c.id}
             chicken={c}

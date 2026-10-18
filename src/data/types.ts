@@ -4,15 +4,23 @@ export interface FeedingRecord {
 }
 
 export interface Chicken {
+
   id: number;
+
   x: number;
   y: number;
 
+  targetX: number;
+  targetY: number;
+
   temperature: number;
+
   weight: number;
+
   age: number;
 
-  feedingHistory: FeedingRecord[];
+  feedingHistory:
+    FeedingRecord[];
 }
 
 

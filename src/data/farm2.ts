@@ -22,5 +22,7 @@ export const farm2: Farm = {
   environment: [],
 
   chickens:
-    generateChickens(450),
+    generateChickens(450,
+    950,
+    420),
 };

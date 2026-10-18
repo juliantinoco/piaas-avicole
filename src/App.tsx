@@ -13,6 +13,7 @@ import { farm2 } from "./data/farm2";
 import { farm3 } from "./data/farm3";
 
 import { getEnvironmentData } from "./services/environmentService";
+import { getChickenPositions } from "./services/chickenPositionService";
 
 export default function App() {
   const farms = [
@@ -47,6 +48,12 @@ export default function App() {
       getEnvironmentData()
     );
 
+  const [animatedChickens,
+    setAnimatedChickens] =
+    useState(
+      selectedFarm.chickens ?? []
+    );
+
   const currentEnvironment =
     environmentData[currentIndex];
 
@@ -55,6 +62,7 @@ export default function App() {
 
     const timer = setInterval(() => {
       setCurrentIndex((previous) => {
+
         const next =
           previous + simulationSpeed;
 
@@ -78,7 +86,34 @@ export default function App() {
     environmentData.length,
   ]);
 
+  useEffect(() => {
+
+      if (!isPlaying) return;
+
+      const timer = setInterval(() => {
+
+        setAnimatedChickens(
+          (previous) =>
+            getChickenPositions(
+              previous,
+              selectedFarm.width,
+              selectedFarm.height
+            )
+        );
+
+      }, 500);
+
+      return () => {
+        clearInterval(timer);
+      };
+
+    }, [
+      selectedFarm,
+      isPlaying
+    ]);
+
   const handlePlay = () => {
+
     const targetDateTime =
       `${selectedDate}T${selectedTime}:00`;
 
@@ -112,7 +147,9 @@ export default function App() {
         minHeight: "100vh",
       }}
     >
-      <h1>Poultry Digital Twin</h1>
+      <h1>
+        Poultry Digital Twin
+      </h1>
 
       <div
         style={{
@@ -128,11 +165,20 @@ export default function App() {
             key={farm.id}
             farm={farm}
             selected={
-              selectedFarm.id === farm.id
+              selectedFarm.id ===
+              farm.id
             }
             onClick={() => {
+
               setSelectedFarm(farm);
-              setSelectedChicken(null);
+
+              setAnimatedChickens(
+                farm.chickens ?? []
+              );
+
+              setSelectedChicken(
+                null
+              );
             }}
           />
         ))}
@@ -141,7 +187,8 @@ export default function App() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "2fr 1fr",
+          gridTemplateColumns:
+            "2fr 1fr",
           gap: "20px",
         }}
       >
@@ -178,8 +225,8 @@ export default function App() {
               <p>
                 Total Chickens:{" "}
                 {
-                  selectedFarm.chickens
-                    .length
+                  selectedFarm
+                    .chickens.length
                 }
               </p>
 
@@ -191,7 +238,9 @@ export default function App() {
                 <SimulationControls
                   onPlay={handlePlay}
                   onPause={() =>
-                    setIsPlaying(false)
+                    setIsPlaying(
+                      false
+                    )
                   }
                   selectedDate={
                     selectedDate
@@ -236,6 +285,9 @@ export default function App() {
 
           <BarnView
             barn={selectedFarm}
+            chickens={
+              animatedChickens
+            }
             luminosity={
               currentEnvironment.luminosity
             }
@@ -255,7 +307,9 @@ export default function App() {
           }}
         >
           <ChickenDetails
-            chicken={selectedChicken}
+            chicken={
+              selectedChicken
+            }
           />
         </div>
       </div>
